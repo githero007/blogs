@@ -1,6 +1,7 @@
 import './App.css'
 import { SignUp } from './components/SignUp';
 import { Login } from './components/LogIn';
+import { ViewBlog } from './components/ViewBlog';
 import {
   RecoilRoot,
   atom,
@@ -16,7 +17,8 @@ function App() {
       <RecoilRoot>
         {/* <SignUp /> */}
         {/* <Login /> */}
-        <PostBlog></PostBlog>
+        {/* <PostBlog></PostBlog> */}
+        <ViewBlog></ViewBlog>
       </RecoilRoot>
     </>
   )

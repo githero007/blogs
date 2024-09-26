@@ -12,12 +12,13 @@ export function Login() {
                 email: email,
                 password: password,
             });
-            setToken(response.data.token);
-            if (token) console.log(token);
+            const newToken = response.data.token;
+            setToken(newToken);
+            localStorage.setItem("token", JSON.stringify(newToken));
         } catch (error) {
             console.log(error);
         }
-        localStorage.setItem("token", JSON.stringify(token));
+
     }
     return (<>
         <input type="text" name="" onChange={(e) => setEmail(e.target.value)} placeholder="enter your email" id="" />
