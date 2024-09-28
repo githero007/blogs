@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { decode, sign, verify } from 'hono/jwt';
 import { createBlogInput, updateBlogInput } from 'common1111111';
+import { userInfo } from 'os';
 
 export const blogRouter = new Hono<{
     Bindings: { DATABASE_URL: string; SECRET_KEY: string };
@@ -21,7 +22,7 @@ blogRouter.use('/*', async (c, next) => {
         return c.json({ error: 'JWT not found' });
     }
 
-    const token = authHeader.replace('Bearer ', ''); // Remove 'Bearer ' if included
+    const token = authHeader.replace('Bearer ', ''); // Removes 'Bearer ' if included
     if (!token) {
         c.status(403);
         return c.json({ error: 'Invalid authorization header format' });
@@ -79,13 +80,18 @@ blogRouter.put('/postblog', async (c) => {
     const prisma = getPrismaClient(c);
     const body = await c.req.json();
     const { success } = updateBlogInput.safeParse(body);
+    const authorId = c.get('userId');
     if (!success) {
         c.status(411);
         return c.json({ error: "invalid input" });
     }
     try {
+
         const updatedBlog = await prisma.blog.update({
-            where: { id: body.id },
+            where: {
+                id: body.id,
+                authorId: authorId,
+            },
             data: {
                 title: body.title,
                 content: body.content,
