@@ -3,51 +3,52 @@ import tokenState from '../atoms/atom.jsx';
 import { blogState } from "../atoms/atom.jsx"; // Ensure blogState is correctly exported
 import axios from "axios";
 import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+import { Session } from "./Session.js";
 
 export function EditBlog() {
-    const [token, setToken] = useState<string>(""); // Initialize with an empty string
+    const [token, setToken] = useState<string>(''); // Initialize token with an empty string
     const [blogId, setBlogId] = useRecoilState(blogState); // Use Recoil to manage blog state
     const [title, setTitle] = useState<string>("");
+    const [cleanedTitle, setCleanedTitle] = useState('');
+    const [cleanedContent, setCleanedContent] = useState('');
     const [content, setContent] = useState<string>("");
     const [published, setPublished] = useState<boolean>(false);
+    const [sessionExpired, setSessionExpired] = useState<boolean>(false); // Track session expiration
+    const navigate = useNavigate();
 
-    // Fetch the token from localStorage
     useEffect(() => {
         const fetchLocalToken = localStorage.getItem("token");
         if (fetchLocalToken) {
             const cleanedToken = JSON.parse(fetchLocalToken);
             setToken(cleanedToken);
+        } else {
+            setSessionExpired(true); // Trigger session expired state
         }
-    }, []); // Removed 'token' from the dependency array to avoid infinite loops
 
-    // Fetch the blog ID from localStorage
-    useEffect(() => {
-        const blogFromLocalStorage = localStorage.getItem("blog");
-        if (blogFromLocalStorage) {
-            const cleanBlogId = JSON.parse(blogFromLocalStorage);
-            setBlogId(cleanBlogId);
+        const fetchLocalBlog = localStorage.getItem("blog");
+        if (fetchLocalBlog) {
+            const cleanedBlog = JSON.parse(fetchLocalBlog);
+            console.log(cleanedBlog);
+            setCleanedTitle(cleanedBlog.title);
+            setCleanedContent(cleanedBlog.content);
+            setBlogId(cleanedBlog.id);
         }
-    }, [setBlogId]); // Set blogId when component mounts
+    }, [setToken, setBlogId]);
 
     async function fetchData() {
-        if (!blogId) {
-            console.error("No blog ID found.");
-            return;
-        }
-
         try {
             const response = await axios.put(
                 "http://127.0.0.1:8787/api/v1/blog/postblog",
                 {
-                    id: blogId, // Use the state blogId here
+                    id: blogId,
                     title: title,
                     content: content,
-                    published: published // Include published status if necessary
                 },
                 {
                     headers: {
-                        Authorization: token // Properly format the Authorization header
-                    }
+                        Authorization: token, // Properly format the Authorization header
+                    },
                 }
             );
             console.log(response.data); // Handle response data as needed
@@ -58,19 +59,29 @@ export function EditBlog() {
 
     return (
         <>
-            <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter your edited title"
-            />
-            <input
-                type="text"
-                value={content}
-                onChange={(e) => setContent(e.target.value)} // Use setContent for content input
-                placeholder="Enter your edited content"
-            />
-            <button onClick={fetchData}>Update Blog</button> {/* Button to trigger fetchData */}
+            {sessionExpired ? (
+                <Session /> // Render Session component if session is expired
+            ) : (
+                <>
+                    <input
+                        type="text"
+                        onChange={(e) => {
+                            setTitle(e.target.value);
+                            setCleanedTitle(e.target.value);
+                        }}
+                        value={cleanedTitle}
+                    />
+                    <input
+                        type="text"
+                        value={cleanedContent}
+                        onChange={(e) => {
+                            setContent(e.target.value);
+                            setCleanedContent(e.target.value);
+                        }} // Use setContent for content input
+                    />
+                    <button onClick={fetchData}>Update Blog</button> {/* Button to trigger fetchData */}
+                </>
+            )}
         </>
     );
 }

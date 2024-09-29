@@ -1,24 +1,34 @@
-import { useState, React, useEffect } from 'react'
-import tokenState from '../atoms/atom.jsx'
+import { useState, React, useEffect } from 'react';
+import tokenState from '../atoms/atom.jsx';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Session } from './Session.js'; // Import Session component
+
 interface BlogPost {
     id: string;
     title: string;
     content: string;
     published: boolean;
 }
+
 export function ViewBlog() {
     const [token, setToken] = useRecoilState<string>(tokenState);
     const [blogs, setBlogs] = useState<BlogPost[]>([]);
+    const [sessionExpired, setSessionExpired] = useState<boolean>(false); // Track session expiration
+    const navigate = useNavigate(); // Initialize navigate
+
     useEffect(() => {
         const fetchLocalTokens = localStorage.getItem("token");
         if (fetchLocalTokens) {
             const cleanToken: string = JSON.parse(fetchLocalTokens); // Ensure it is treated as a string
             setToken(cleanToken);
-            console.log(token);
+            console.log(cleanToken); // Log token
+        } else {
+            setSessionExpired(true); // Set session expired if no token found
         }
-    }, [setToken]);
+    }, [setToken]); // Removed navigate from the dependencies as it's not used inside this hook
+
     useEffect(() => {
         const fetchData = async () => {
             if (!token) {
@@ -42,18 +52,25 @@ export function ViewBlog() {
                 }
             }
         };
-        fetchData();
-    }, [token]);
+        if (!sessionExpired) {
+            fetchData(); // Fetch data only if session hasn't expired
+        }
+    }, [token, sessionExpired]); // Added sessionExpired to the dependencies
+
     return (
         <>
-            {blogs.map((blog) => {
-                return (
-                    <div key={blog.id}>
-                        <h1>{blog.title}</h1>
-                        <p>{blog.content}</p>
-                    </div>
-                )
-            })}
+            {sessionExpired ? (
+                <Session /> // Render Session component if session has expired
+            ) : (
+                blogs.map((blog) => {
+                    return (
+                        <div key={blog.id}>
+                            <h1>{blog.title}</h1>
+                            <p>{blog.content}</p>
+                        </div>
+                    );
+                })
+            )}
         </>
-    )
+    );
 }

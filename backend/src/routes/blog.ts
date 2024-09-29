@@ -125,6 +125,26 @@ blogRouter.get('/indiviudal/:id', async (c) => {
         return c.json({ error: 'Error retrieving the blog post' });
     }
 });
+blogRouter.get('/myBlog', async (c) => {
+    const prisma = getPrismaClient(c);
+    const authorId = c.get('userId');
+    try {
+        const blogs = await prisma.blog.findMany(
+            {
+                where: {
+                    authorId: authorId,
+                }
+            }
+        );
+        c.status(200);
+        return c.json({ blog: blogs });
+
+    } catch (error) {
+        c.status(500);
+        return c.json({ error: "internal server error" });
+    }
+
+})
 
 blogRouter.get('/bulk', async (c) => {
     const prisma = getPrismaClient(c);

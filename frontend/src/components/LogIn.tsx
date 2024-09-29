@@ -16,7 +16,8 @@ export function Login() {
             setToken(newToken);
             localStorage.setItem("token", JSON.stringify(newToken));
         } catch (error) {
-            console.log(error);
+            if (error.response.status == 500)
+                console.log(error);
         }
 
     }

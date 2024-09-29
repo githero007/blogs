@@ -5,7 +5,7 @@ const tokenState = atom({
 });
 const blogState = atom({
     key: "blogState",
-    default: [],
+    default: {},
 })
 export default tokenState;
 export { blogState };
