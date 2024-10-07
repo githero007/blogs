@@ -14,7 +14,7 @@ export function Login() {
 
     async function handleLogin(): Promise<void> {
         try {
-            const response = await axios.post("https://hono-src.aayush68n.workers.dev/api/v1/user/signup", {
+            const response = await axios.post("https://hono-src.aayush68n.workers.dev/api/v1/user/login", {
                 email: email,
                 password: password,
             });
