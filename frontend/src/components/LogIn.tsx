@@ -4,7 +4,7 @@ import axios from "axios";
 import tokenState from '../atoms/Atom.jsx';
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import './Login.css'; // Import the CSS file
+import './LogIn.css'; // Import the CSS file
 
 export function Login() {
     const [email, setEmail] = useState<string>('');
