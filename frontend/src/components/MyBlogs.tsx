@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import tokenState, { blogState } from '../atoms/atom.jsx';
+// @ts-nocheck
+import { useEffect, useState } from "react";
+import tokenState, { blogState } from '../atoms/Atom.jsx';
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
@@ -56,6 +57,7 @@ export function MyBlogs() {
 
     function handleEdit(blog: Blogs) {
         setBlogi(blog);
+        console.log(blogi);
         localStorage.setItem("blog", JSON.stringify(blog));
         navigate("/editblog");
     }

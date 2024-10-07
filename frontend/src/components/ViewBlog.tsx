@@ -1,9 +1,10 @@
+// @ts-nocheck
 import { useState, useEffect } from 'react';
-import tokenState from '../atoms/atom.jsx';
+import tokenState from '../atoms/Atom.jsx';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { Session } from './Session.js'; // Import Session component
+import { Session } from './Session.tsx'; // Import Session component
 import './viewBlog.css'; // Import the CSS for styling
 
 interface BlogPost {

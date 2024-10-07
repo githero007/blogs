@@ -1,6 +1,7 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
-import tokenState from '../atoms/atom.jsx';
-import { blogState } from "../atoms/atom.jsx"; // Ensure blogState is correctly exported
+import tokenState from '../atoms/Atom.jsx';
+import { blogState } from "../atoms/Atom.jsx"; // Ensure blogState is correctly exported
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";

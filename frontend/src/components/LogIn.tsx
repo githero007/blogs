@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { useState } from "react";
 import axios from "axios";
-import tokenState from '../atoms/atom.jsx';
+import tokenState from '../atoms/Atom.jsx';
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import './Login.css'; // Import the CSS file

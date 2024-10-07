@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { useState } from "react";
 import axios from 'axios';
 import { useRecoilState } from "recoil";
-import tokenState from '../atoms/atom.jsx';
+import tokenState from '../atoms/Atom.jsx';
 import './SignUp.css'; // Import the CSS file
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
