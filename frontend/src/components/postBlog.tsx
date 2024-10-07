@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { Session } from './Session.js';
+import './postBlog.css'
 
 export function PostBlog() {
     const [token, setToken] = useRecoilState<string>(tokenState);
@@ -28,7 +29,7 @@ export function PostBlog() {
         try {
             console.log(token);
             setPublished(true);
-            const response = await axios.post('http://127.0.0.1:8787/api/v1/blog/postblog', {
+            const response = await axios.post('https://hono-src.aayush68n.workers.dev/api/v1/blog/postblog', {
                 title: title,
                 content: content,
                 published: published
@@ -41,6 +42,8 @@ export function PostBlog() {
 
             // Assuming the response contains the blogId
             const blogId = response.data.blogId;
+            alert("the blog has been submitted");
+            navigate('/viewblog');
 
             // Set blogId in localStorage
             if (blogId) {
@@ -59,8 +62,8 @@ export function PostBlog() {
             {sessionExpired ? (
                 <Session /> // Render Session component if session has expired
             ) : (
-                <>
-                    <input
+                <div className='postContainer'>
+                    <input className="titleContainer"
                         type="text"
                         onChange={(e) => setTitle(e.target.value)}
                         placeholder="Enter the title of the blog"
@@ -68,15 +71,14 @@ export function PostBlog() {
                         id=""
                     />
                     <br />
-                    <input
-                        type="text"
+                    <textarea className="editContainer"
                         onChange={(e) => setContent(e.target.value)}
                         placeholder="Enter the body of the blog"
                         name=""
                         id=""
                     />
-                    <button onClick={handleSubmit}>Submit</button>
-                </>
+                    <button className="submitBtn" onClick={handleSubmit}>Submit</button>
+                </div>
             )}
         </>
     );

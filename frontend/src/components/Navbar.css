@@ -1,0 +1,76 @@
+/* Navbar Styles */
+.navbar {
+    background-color: #bdc2c6;
+    /* Background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+    padding: 10px 5px;
+    /* Consistent padding */
+    min-height: 30px;
+    /* Minimum height for the navbar */
+    position: fixed;
+    /* Fix the navbar at the top */
+    top: 0;
+    /* Position it at the top of the viewport */
+    left: 0;
+    /* Align it to the left */
+    right: 0;
+    /* Align it to the right */
+    z-index: 1000;
+    /* Ensure it stays above other content */
+}
+
+/* Navbar link styles */
+.nav-link {
+    font-size: 16px;
+    /* Font size for links */
+    color: #343a40;
+    /* Dark text color */
+    margin: 110px 15px;
+    /* Constant margin between links */
+    transition: color 0.3s ease;
+    /* Smooth transition for hover effect */
+}
+
+/* Navbar link hover effect */
+.nav-link:hover {
+    color: #007bff;
+    /* Change color on hover */
+}
+
+/* Navbar brand styles */
+.navbar-brand {
+    font-size: 18px;
+    /* Brand font size */
+    font-weight: bold;
+    /* Bold brand title */
+    color: #007bff;
+    /* Brand color */
+}
+
+/* Styles for the dropdown menu */
+.nav-dropdown {
+    font-size: 16px;
+    /* Font size for dropdown items */
+}
+
+/* Dropdown link hover effect */
+.nav-dropdown .dropdown-item:hover {
+    background-color: #007bff;
+    /* Change background on hover */
+    color: rgb(63, 61, 61);
+    /* White text color on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .navbar {
+        padding: 10px;
+        /* Reduce padding on smaller screens */
+    }
+
+    .nav-link {
+        font-size: 14px;
+        /* Smaller font size for links */
+    }
+}

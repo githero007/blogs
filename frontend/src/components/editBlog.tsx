@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { Session } from "./Session.js";
+import './editBlog.css'
 
 export function EditBlog() {
     const [token, setToken] = useState<string>(''); // Initialize token with an empty string
@@ -39,7 +40,7 @@ export function EditBlog() {
     async function fetchData() {
         try {
             const response = await axios.put(
-                "http://127.0.0.1:8787/api/v1/blog/postblog",
+                `${process.env.URL}/api/v1/blog/postblog`,
                 {
                     id: blogId,
                     title: title,
@@ -52,18 +53,20 @@ export function EditBlog() {
                 }
             );
             console.log(response.data); // Handle response data as needed
+            alert("the blog has been edited");
+            navigate('/viewblog');
         } catch (error) {
             console.error("Error updating the blog post:", error);
         }
     }
 
     return (
-        <>
+        <div className="editContainer">
             {sessionExpired ? (
                 <Session /> // Render Session component if session is expired
             ) : (
-                <>
-                    <input
+                <div className="mainContent">
+                    <input className="titleContainer"
                         type="text"
                         onChange={(e) => {
                             setTitle(e.target.value);
@@ -71,7 +74,7 @@ export function EditBlog() {
                         }}
                         value={cleanedTitle}
                     />
-                    <input
+                    <textarea className="contentContainer"
                         type="text"
                         value={cleanedContent}
                         onChange={(e) => {
@@ -79,9 +82,9 @@ export function EditBlog() {
                             setCleanedContent(e.target.value);
                         }} // Use setContent for content input
                     />
-                    <button onClick={fetchData}>Update Blog</button> {/* Button to trigger fetchData */}
-                </>
+                    <button className="updateButton" onClick={fetchData}>Update Blog</button> {/* Button to trigger fetchData */}
+                </div>
             )}
-        </>
+        </div>
     );
 }

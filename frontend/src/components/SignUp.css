@@ -1,0 +1,57 @@
+/* SignUp.css */
+
+/* Container styles */
+.signup-container {
+    max-width: 400px;
+    /* Limit the width of the form */
+    margin: 50px auto;
+    /* Center the form on the page */
+    padding: 20px;
+    /* Add padding inside the container */
+    border: 1px solid #ccc;
+    /* Light border for the form */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    /* Light background color */
+}
+
+/* Input styles */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    /* Full width inputs */
+    padding: 10px;
+    /* Padding for better usability */
+    margin: 10px 0;
+    /* Space between inputs */
+    border: 1px solid #ccc;
+    /* Light border for inputs */
+    border-radius: 4px;
+    /* Rounded corners for inputs */
+}
+
+/* Button styles */
+button {
+    width: 100%;
+    /* Full width button */
+    padding: 10px;
+    /* Padding for the button */
+    background-color: #007bff;
+    /* Bootstrap primary color */
+    color: white;
+    /* White text color */
+    border: none;
+    /* Remove default border */
+    border-radius: 4px;
+    /* Rounded corners for the button */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #0056b3;
+    /* Darker shade on hover */
+}

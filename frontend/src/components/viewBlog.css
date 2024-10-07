@@ -1,0 +1,51 @@
+/* Container for the cards */
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allows wrapping of cards into rows */
+    justify-content: center;
+    /* Center cards in the container */
+    gap: 20px;
+    /* Space between cards */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Individual card styling */
+.blogCard {
+    background-color: #6b6868;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    /* Fixed width for the card */
+    padding: 20px;
+    box-sizing: border-box;
+    /* Include padding in the element's width/height */
+    transition: transform 0.2s ease;
+    /* Smooth animation on hover */
+}
+
+/* Hover effect for the card */
+.blogCard:hover {
+    transform: translateY(-5px);
+    /* Lift card slightly on hover */
+}
+
+/* Blog title styling */
+.blogTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+}
+
+/* Blog content styling */
+.blogContent {
+    font-size: 16px;
+    color: black;
+    text-align: left;
+    white-space: pre-wrap;
+    /* Preserve whitespace and newlines */
+}
